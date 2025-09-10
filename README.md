@@ -14,7 +14,7 @@ This is a lovingly crafted birthday website created as a special surprise for my
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/your-username/happy-birthday-love.git
+    git clone https://github.com/maxonxoxo/Happy-Birthday-love.git
     ```
 
 2. Add your own photos named `photo1.jpg`, `photo2.jpg`, … up to `photo18.jpg` in the same folder as `index.html`.

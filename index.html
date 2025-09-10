@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #ffe6f0, #e6f7ff);
+      font-family: 'Pacifico', cursive;
+      color: #4d4d4d;
+      overflow-x: hidden;
+      text-align: center;
+    }
+    h1 {
+      font-size: 3em;
+      margin-top: 50px;
+      color: #ff99aa;
+      animation: glow 1.5s infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #fff0f5, 0 0 20px #ffc0cb, 0 0 30px #ffb6c1; }
+      to { text-shadow: 0 0 20px #ffe6f0, 0 0 30px #ff99cc, 0 0 40px #ffb6c1; }
+    }
+    .message {
+      margin: 20px auto;
+      font-size: 1.4em;
+      max-width: 600px;
+      color: #666;
+      z-index: 2;
+    }
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: pink;
+      transform: rotate(-45deg);
+      animation: floatUp 8s linear infinite;
+      opacity: 0.8;
+      bottom: -50px;
+    }
+    .heart:before, .heart:after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: inherit;
+      border-radius: 50%;
+    }
+    .heart:before { top: -10px; left: 0; }
+    .heart:after { left: 10px; top: 0; }
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(-45deg); opacity: 1; }
+      100% { transform: translateY(-120vh) rotate(-45deg); opacity: 0; }
+    }
+    .surprise-btn {
+      background: #aee1f9;
+      z-index: 2;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      border-radius: 30px;
+      cursor: pointer;
+      color: #4d4d4d;
+      margin-top: 30px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: background 0.3s;
+    }
+    .surprise-btn:hover { background: #bfe8fb; }
+    #surprise {
+      display: none;
+      margin: 30px auto;
+      overflow-y: auto;
+      max-height: 90vh;
+      max-width: 600px;
+      background: #fff0f5;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      font-size: 1.2em;
+      color: #555;
+      text-align: left;
+      line-height: 1.6em;
+      animation: fadeIn 1s ease forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* ✅ Fixed floating gallery CSS for mobile */
+    #floating-gallery {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: -1;
+    }
+      .floating-img {
+  position: fixed;
+  bottom: -150px;
+  z-index: -1;
+  width: 120px;
+  height: 90px;
+  object-fit: contain; /* Changed from 'cover' to 'contain' to prevent cropping */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  animation: floatImage 12s linear forwards;
+  pointer-events: none;
+  background-color: rgba(255,255,255,0.3); /* Fallback background */
+  transform: translateZ(0); /* Hardware acceleration */
+}
+    
+    @keyframes floatImage {
+      0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.8;
+      }
+      90% {
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(calc(-100vh - 200px)) translateX(20px);
+        opacity: 0;
+      }
+    }
+
+
+    #login-screen {
+      position: fixed;
+      top: 0; left: 0; right:0; bottom:0;
+      background: rgba(255,230,240,0.6);
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 9999;
+    }
+    #login-content {
+      background: rgba(255,255,255,0.85);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    #login-content h2 {
+      margin-top: 0;
+      font-size: 1.8em;
+      color: #ff99aa;
+    }
+    #login-screen input {
+      padding: 10px 20px;
+      font-size: 1.2em;
+      border-radius: 10px;
+      border: 2px solid #ff99aa;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    #login-screen button {
+      background: #ff99aa;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1.1em;
+      border-radius: 10px;
+      cursor: pointer;
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    #login-error {
+      color: #e60073;
+      margin-top: 10px;
+      font-size: 1em;
+    }
+    
+    @media (min-width: 768px) {
+      body {
+        padding: 0 10px;
+        font-size: 14px;
+      }
+
+      .pin-screen input {
+        width: 80%;
+        font-size: 1.2rem;
+      }
+
+      .pin-screen button {
+        padding: 8px 16px;
+        font-size: 1rem;
+      }
+
+      .birthday-message h1 {
+        font-size: 2rem;
+      }
+
+      .birthday-message p {
+        font-size: 1.1rem;
+      }
+
+      .slideshow img {
+        max-width: 90vw;
+        max-height: 60vh;
+        object-fit: cover;
+        border-radius: 12px;
+      }
+
+      .surprise-button {
+        padding: 10px 18px;
+        font-size: 1rem;
+      }
+
+       .floating-img {
+      width: 180px;
+      height: 135px;
+      
+      /* Adjusted animation for mobile */
+      @keyframes floatImage {
+        0% {
+          transform: translateY(0);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        90% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(calc(-100vh - 150px));
+          opacity: 0;
+        }
+      }
+      
+      @keyframes drift {
+        0%, 100% { transform: translateX(0) rotate(-1deg); }
+        50% { transform: translateX(10px) rotate(1deg); }
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="login-screen">
+    <div id="login-content">
+      <h2> 🤨✋Enter PIN to continue</h2>
+      <input type="password" id="pin-input" placeholder="Enter PIN">
+      <button onclick="checkPin()">Enter</button>
+      <div id="login-error"></div>
+    </div>
+  </div>
+
+  <h1>🎉 Happy 18th Birthday, My Love! 🎉</h1>
+
+  <!-- 🎈 Fixed Floating Image Gallery 🎈 -->
+  <div id="floating-gallery"></div>
+
+  <div class="message">Wishing you the most magical day filled with love, laughter, and everything you dream of. 💖</div>
+  <button class="surprise-btn" onclick="showSurprise()">Click here for a surprise 💌</button>
+  <div id="surprise">
+    <h2>💗 My Letter To You 💗</h2>
+    <p>My dearest Love!!,</p>
+    <p>Today is a special day, because it’s the day the most wonderful person in my life was born. I don’t even have the perfect words to describe how much you mean to me, but I just want you to know that every moment with you feels like a beautiful gift.
+
+Your smile brightens my darkest days, and your kindness makes the world a better place—not just for me, but for everyone around you. On your birthday, I wish you nothing but endless joy, success, and love, because someone as amazing as you deserves all the happiness life can offer.
+
+I can’t wait to celebrate you properly and make unforgettable memories together. Thank you for being my rock, my inspiration, and my greatest love.
+
+Happy Birthday, sweetheart. 💖🎂
+With all my love
+    </p>
+    <p>Happy Birthday, my sweetheart! 🎂🎈</p>
+    <p>With all my heart,<br>Your love 💌</p>
+  </div>
+
+ <script>
+    // Heart creation function
+    function createHearts(count) {
+      for (let i = 0; i < count; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        const pastelColors = ['#ffb6c1','#ffc0cb','#ff99cc','#ffccd5','#ffe0eb','#ffd6e8'];
+        heart.style.backgroundColor = pastelColors[Math.floor(Math.random()*pastelColors.length)];
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = (4 + Math.random()*4) + 's';
+        heart.style.opacity = Math.random()*0.5 + 0.5;
+        const size = 15+Math.random()*10;
+        heart.style.width = heart.style.height = size+'px';
+        heart.style.bottom = (-50 - Math.random()*100)+'px';
+        document.body.appendChild(heart);
+      }
+    }
+
+    function showSurprise(){
+      document.getElementById('surprise').style.display = 'block';
+    }
+
+    function checkPin(){
+      const pin = document.getElementById('pin-input').value;
+      if(pin === '2623'){
+        document.getElementById('login-screen').style.display='none';
+      }else{
+        document.getElementById('login-error').textContent='Incorrect PIN. Try again.';
+      }
+    }
+
+    // Initialize hearts
+    createHearts(40);
+    
+    // Floating images setup
+    const gallery = document.getElementById('floating-gallery');
+    const totalImages = 18;
+    let activeImages = 0;
+    let maxActiveImages = window.innerWidth < 768 ? 3 : 4;
+
+    // Preload images
+    function preloadImages() {
+      for (let i = 1; i <= totalImages; i++) {
+        const img = new Image();
+        img.src = `photo${i}.jpg`;
+      }
+    }
+
+    // Optimized image creation
+    function createFloatingImage() {
+      if (activeImages >= maxActiveImages) return;
+      
+      activeImages++;
+      
+      const img = new Image();
+      img.className = 'floating-img';
+      const randomIndex = Math.floor(Math.random() * totalImages) + 1;
+      img.src = `photo${randomIndex}.jpg`;
+      
+      // Set dimensions
+      const aspectRatio = 4/3;
+      const baseSize = window.innerWidth < 768 ? 100 : 150;
+      const sizeFactor = 0.8 + Math.random() * 0.4;
+      img.style.width = `${baseSize * sizeFactor}px`;
+      img.style.height = `${(baseSize * sizeFactor) / aspectRatio}px`;
+      
+      // Positioning
+      img.style.left = `${10 + Math.random() * 80}%`;
+      
+      // Animation
+      const duration = window.innerWidth < 768 ? 8 + Math.random() * 6 : 10 + Math.random() * 8;
+      img.style.animationDuration = `${duration}s`;
+      
+      img.onload = function() {
+        gallery.appendChild(img);
+        
+        img.addEventListener('animationend', function() {
+          img.remove();
+          activeImages--;
+          setTimeout(createFloatingImage, 1000 + Math.random() * 2000);
+        }, {once: true});
+      };
+      
+      img.onerror = function() {
+        activeImages--;
+        setTimeout(createFloatingImage, 500);
+      };
+    }
+
+    // Start everything when page loads
+    window.addEventListener('DOMContentLoaded', function() {
+      preloadImages();
+      
+      // Start with 2 images (staggered)
+      setTimeout(createFloatingImage, 500);
+      setTimeout(createFloatingImage, 1500);
+      
+      // Adjust on resize
+      window.addEventListener('resize', function() {
+        maxActiveImages = window.innerWidth < 768 ? 3 : 4;
+      });
+    });
+  </script>
+</body>
+</html>

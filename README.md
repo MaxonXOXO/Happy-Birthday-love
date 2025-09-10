@@ -21,7 +21,7 @@ This is a lovingly crafted birthday website created as a special surprise for my
 
 3. Open `index.html` in your browser.
 
-4. Enter the PIN `2623` to access the birthday message.
+4. Enter the PIN `2623` to access the birthday message. [you can edit the code to change pin to your liking!]
 
 ## 🎨 Customization
 
